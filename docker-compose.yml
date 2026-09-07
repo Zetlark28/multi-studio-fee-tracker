@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-multistudiofeetracker}
+      POSTGRES_USER: ${DB_USER:-multistudiofeetracker}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set a postgres password}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./multi-studio-fee-tracker-be
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      JWT_SECRET: ${JWT_SECRET:?set a JWT secret of at least 32 bytes}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-multistudiofeetracker}
+      DB_USER: ${DB_USER:-multistudiofeetracker}
+      DB_PASSWORD: ${DB_PASSWORD:?set a postgres password}
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./multi-studio-fee-tracker-fe
+    depends_on:
+      - backend
+    ports:
+      - "8081:80"
