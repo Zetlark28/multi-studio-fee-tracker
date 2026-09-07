@@ -6,6 +6,7 @@ API REST (Spring Boot + JPA) per la gestione di clienti (studi) e dei loro servi
 
 - Java 25
 - Maven (incluso il wrapper `./mvnw`)
+- Un database PostgreSQL raggiungibile (di default `localhost:5432`, vedi sotto)
 
 ## Avvio
 
@@ -13,7 +14,7 @@ API REST (Spring Boot + JPA) per la gestione di clienti (studi) e dei loro servi
 ./mvnw spring-boot:run
 ```
 
-Il server si avvia su `http://localhost:8080`, con base path `/api` (configurato in `server.servlet.context-path`, vedi `application.yaml`). In sviluppo usa un database H2 in memoria: i dati non sono persistenti tra un riavvio e l'altro.
+Il server si avvia su `http://localhost:8080`, con base path `/api` (configurato in `server.servlet.context-path`, vedi `application.yaml`). Il database è PostgreSQL: connessione, credenziali e nome del database si configurano con le variabili d'ambiente `DB_HOST` (default `localhost`), `DB_PORT` (default `5432`), `DB_NAME`, `DB_USER`, `DB_PASSWORD` (queste ultime tre hanno un default valido solo per sviluppo, vedi `application.yaml`). Lo schema viene creato/aggiornato automaticamente da Hibernate (`ddl-auto: update`), non essendoci ancora uno strumento di migrazione (Flyway/Liquibase).
 
 Il secret usato per firmare i JWT ha un default valido solo per sviluppo (`application.yaml`). In produzione impostare la variabile d'ambiente `JWT_SECRET` con un valore casuale di almeno 32 byte.
 

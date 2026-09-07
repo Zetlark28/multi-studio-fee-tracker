@@ -19,7 +19,6 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: docker
       JWT_SECRET: ${JWT_SECRET:?set a JWT secret of at least 32 bytes}
       ADMIN_USERNAME: ${ADMIN_USERNAME:-}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}

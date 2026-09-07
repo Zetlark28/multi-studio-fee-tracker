@@ -6,6 +6,15 @@ server:
 spring:
   application:
     name: multi-studio-fee-tracker-be
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:multistudiofeetracker}
+    username: ${DB_USER:multistudiofeetracker}
+    # Solo per sviluppo: in produzione impostare la variabile d'ambiente DB_PASSWORD.
+    password: ${DB_PASSWORD:multistudiofeetracker}
+  jpa:
+    hibernate:
+      # No migration tool (Flyway/Liquibase) in place: Hibernate tiene lo schema sincronizzato.
+      ddl-auto: update
 
 jwt:
   # Solo per sviluppo: in produzione impostare la variabile d'ambiente JWT_SECRET (≥32 byte).
