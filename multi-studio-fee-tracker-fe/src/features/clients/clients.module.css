@@ -1,0 +1,163 @@
+.title {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.formStacked {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+}
+
+.select {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+}
+
+.checkboxLabel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantityInput {
+  width: 4.5rem;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-bg);
+}
+
+.button {
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.listItem {
+  display: flex;
+  align-items: stretch;
+  gap: 0.25rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.listItemButton {
+  flex: 1;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.ownerLabel {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.listItemText {
+  flex: 1;
+  padding: 0.85rem 1rem;
+}
+
+.deleteButton {
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.hint {
+  color: var(--color-text-muted);
+}
+
+.error {
+  color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 1rem;
+}

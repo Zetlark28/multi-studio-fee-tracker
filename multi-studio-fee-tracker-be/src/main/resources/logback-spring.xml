@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <conversionRule conversionWord="tid"
+                     converterClass="com.zetlark.multistudiofeetrackerbe.application.config.logging.ThreadIdConverter"/>
+
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                            "date": "%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}",
+                            "threadId": "%tid",
+                            "description": "%message%exception{full}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="JSON_CONSOLE"/>
+    </root>
+
+</configuration>

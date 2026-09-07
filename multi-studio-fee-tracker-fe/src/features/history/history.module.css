@@ -1,0 +1,152 @@
+.title {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  margin: 0 0 0.75rem;
+}
+
+.monthHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.monthLabel {
+  font-weight: 600;
+  min-width: 9rem;
+  text-align: center;
+}
+
+.navButton {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+}
+
+.weekdayLabel {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  padding-bottom: 0.25rem;
+}
+
+.dayCellEmpty {
+  min-height: 3.5rem;
+}
+
+.dayCell,
+.dayCellActive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-height: 3.5rem;
+  padding: 0.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.dayCell {
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.dayCellActive {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg);
+  font-weight: 600;
+}
+
+.dayCellActive:disabled,
+.dayCell:disabled {
+  opacity: 1;
+}
+
+.dayNumber {
+  font-size: 0.85rem;
+}
+
+.dayRevenue {
+  font-size: 0.75rem;
+  color: var(--color-primary);
+}
+
+.backButton {
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.listItem {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.listItemButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.listItemRevenue {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.listItemText {
+  display: block;
+  padding: 0.85rem 1rem;
+}
+
+.hint {
+  color: var(--color-text-muted);
+}
+
+.error {
+  color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.85rem;
+}
