@@ -17,5 +17,7 @@ RUN addgroup -S app && adduser -S app -G app
 COPY --from=build /workspace/target/*.jar app.jar
 USER app
 
+ENV JAVA_OPTS="-Xms400m -Xmx400m"
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar"]
