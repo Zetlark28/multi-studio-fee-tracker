@@ -1,0 +1,69 @@
+# Compose file for the EC2 host. Pulls backend and frontend images from a
+# private ECR repo (built/pushed via scripts/push-ecr.sh) instead of
+# building locally. Only the frontend's nginx is published on port 80; it
+# proxies /api/ to the backend internally (see
+# multi-studio-fee-tracker-fe/nginx.conf), so the backend is never exposed
+# on the host.
+#
+# Usage on the EC2 instance:
+#   cp .env.prod.example .env
+#   # fill in .env, then:
+#   aws ecr get-login-password --region "$AWS_REGION" \
+#     | docker login --username AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
+#   docker compose -f docker-compose.prod.yml pull
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# Prefer attaching an IAM instance role with ECR read access
+# (AmazonEC2ContainerRegistryReadOnly) to the EC2 instance over long-lived
+# credentials — the login command above then just works via the instance
+# profile.
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-multistudiofeetracker}
+      POSTGRES_USER: ${DB_USER:-multistudiofeetracker}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?set a postgres password}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    image: ${AWS_ACCOUNT_ID:?set your AWS account id}.dkr.ecr.${AWS_REGION:-eu-west-1}.amazonaws.com/${ECR_REPO_BE:-multi-studio-fee-tracker-be}:${VERSION:-latest}
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?set a JWT secret of at least 32 bytes}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-multistudiofeetracker}
+      DB_USER: ${DB_USER:-multistudiofeetracker}
+      DB_PASSWORD: ${DB_PASSWORD:?set a postgres password}
+    # No `ports:` here on purpose — the backend is reachable only from
+    # other containers on this compose network, not from the host/internet.
+
+  frontend:
+    image: ${AWS_ACCOUNT_ID:?set your AWS account id}.dkr.ecr.${AWS_REGION:-eu-west-1}.amazonaws.com/${ECR_REPO_FE:-multi-studio-fee-tracker-fe}:${VERSION:-latest}
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      SERVER_NAME: ${SERVER_NAME:?set the domain name (e.g. your-domain.example.com)}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/www/certbot:/var/www/certbot:ro
